@@ -1,0 +1,10 @@
+Merge current users with deleted users
+
+SELECT FROM_UNIXTIME(wp_jmcrm_notes.created, '%Y') AS Year, FROM_UNIXTIME(wp_jmcrm_notes.created, '%M') as Month, wp_jmcrm_notes.created_by_user_id,  wp_users.display_name, CONCAT(wp_jmcrm_deleted_users.first_name, " ", wp_jmcrm_deleted_users.last_name) as Name, wp_jmcrm_notes.comments, sum(time_spent) AS TimeSpent
+FROM `wp_jmcrm_notes`
+LEFT JOIN wp_jmcrm_customers ON wp_jmcrm_notes.customer_id=wp_jmcrm_customers.customer_id
+LEFT JOIN wp_users ON wp_jmcrm_notes.created_by_user_id=wp_users.id
+LEFT JOIN wp_jmcrm_deleted_users ON wp_jmcrm_notes.created_by_user_id=wp_jmcrm_deleted_users.user_id
+WHERE  wp_jmcrm_notes.note_owner_type="webdevelopment_services" AND FROM_UNIXTIME(wp_jmcrm_notes.created, '%Y') > 2018 AND wp_jmcrm_notes.type_of_work != 'Website Development Feature' AND wp_jmcrm_notes.tracking_category != 'design' AND wp_jmcrm_notes.time_spent < 4
+GROUP BY FROM_UNIXTIME(wp_jmcrm_notes.created, '%Y'), FROM_UNIXTIME(wp_jmcrm_notes.created, '%M'), wp_users.user_nicename
+ORDER BY wp_jmcrm_notes.created;

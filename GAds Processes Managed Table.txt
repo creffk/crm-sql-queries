@@ -1,0 +1,10 @@
+GAds Processes Managed Table
+
+SELECT FROM_UNIXTIME(wp_jmcrm_notes.created, '%M'), wp_users.user_nicename, type_of_work, Count(Distinct(wp_jmcrm_notes.customer_id)) AS Accounts, sum(time_spent) AS Time
+FROM `wp_jmcrm_notes`
+LEFT JOIN wp_jmcrm_customers ON wp_jmcrm_notes.customer_id=wp_jmcrm_customers.customer_id
+LEFT JOIN wp_users ON wp_jmcrm_notes.created_by_user_id=wp_users.id
+LEFT JOIN wp_jmcrm_internet_marketing_subservices ON wp_jmcrm_internet_marketing_subservices.internet_marketing_subservice_id=wp_jmcrm_notes.owner_id
+WHERE wp_jmcrm_notes.note_owner_type="internet_marketing_subservices" AND wp_jmcrm_internet_marketing_subservices.internet_marketing_subservice_type="GAds" AND FROM_UNIXTIME(wp_jmcrm_notes.created, '%Y') = 2022  AND user_nicename = 'kyle-watts'
+GROUP BY FROM_UNIXTIME(wp_jmcrm_notes.created, '%M'), type_of_work
+ORDER BY `wp_jmcrm_notes`.`created`  ASC;

@@ -1,0 +1,9 @@
+GAds Objective Timesheet Query
+
+SELECT wp_jmcrm_notes.note_id, wp_jmcrm_notes.created, wp_jmcrm_notes.customer_id, business_name, wp_jmcrm_notes.comments, time_spent, type_of_work, tracking_category, wp_jmcrm_notes.created_by_user_id, wp_users.user_nicename
+FROM `wp_jmcrm_notes`
+LEFT JOIN wp_jmcrm_customers ON wp_jmcrm_notes.customer_id=wp_jmcrm_customers.customer_id
+LEFT JOIN wp_users ON wp_jmcrm_notes.created_by_user_id=wp_users.id
+LEFT JOIN wp_jmcrm_internet_marketing_subservices ON wp_jmcrm_internet_marketing_subservices.internet_marketing_subservice_id=wp_jmcrm_notes.owner_id
+WHERE wp_jmcrm_notes.note_owner_type="internet_marketing_subservices" AND wp_jmcrm_internet_marketing_subservices.internet_marketing_subservice_type="GAds" AND wp_jmcrm_notes.created > 1651253766  
+ORDER BY `wp_jmcrm_notes`.`created`  ASC;

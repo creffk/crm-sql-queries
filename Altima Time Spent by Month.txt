@@ -1,0 +1,6 @@
+Altima Time Spent by Month
+
+SELECT extract(Year FROM DATETIME(created_on)), extract(Month FROM DATETIME(created_on)), user_name, sum(hours) FROM `gads-objective-performance-log.altima_time_log.altima-time-spent` 
+WHERE extract(Year FROM DATETIME(created_on)) = 2022 AND extract(Month FROM DATETIME(created_on)) = 8
+GROUP BY extract(Year FROM DATETIME(created_on)), extract(Month FROM DATETIME(created_on)), user_name
+
